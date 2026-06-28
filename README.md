@@ -15,39 +15,7 @@ This is a **vendor-neutral, customer-agnostic reference** distilled from real en
 
 ## Architecture
 
-```mermaid
-flowchart TB
-  subgraph Edge["Entry / Identity"]
-    AGW["App Gateway + WAF v2"]
-    ENTRA["Entra ID · Conditional Access · PIM"]
-  end
-  subgraph Gateway["Model Gateway (Azure API Management)"]
-    APIM["APIM<br/>authz · version-pin · rate-limit<br/>prompt-injection defense"]
-    GUARD["I/O Safety<br/>(Llama Guard)"]
-  end
-  subgraph AKS["AKS (GPU node pools)"]
-    ORCH["Agent Orchestrator<br/>(MCP) — per-agent least privilege"]
-    SUB["Specialized sub-agents"]
-    VLLM["Self-hosted LLM serving<br/>(vLLM)"]
-  end
-  subgraph Data["Knowledge & State"]
-    VEC["Vector search (RAG)"]
-    PG["Postgres / Redis"]
-  end
-  subgraph Ops["Platform"]
-    OTEL["Azure Monitor → SIEM"]
-    KV["Key Vault"]
-  end
-
-  AGW --> APIM --> GUARD --> ORCH
-  ENTRA -.-> APIM
-  ORCH --> SUB --> VLLM
-  ORCH --> VEC
-  ORCH --> PG
-  VLLM --> OTEL
-  APIM --> OTEL
-  KV -.-> AKS
-```
+![Reference architecture: App Gateway/WAF and Entra ID at the edge feed Azure API Management — the single model gateway (authz, version-pin, rate-limit, prompt-injection defense, audit) with Llama Guard I/O safety; the gateway governs an MCP agent orchestrator on AKS GPU nodes driving specialized sub-agents and self-hosted vLLM serving, with RAG vector search and Postgres/Redis state, secrets from Key Vault via managed identity, and telemetry to Azure Monitor / SIEM.](docs/architecture.svg)
 
 ## Key components & decisions
 
