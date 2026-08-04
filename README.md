@@ -25,7 +25,7 @@ This is a **vendor-neutral, customer-agnostic reference** distilled from real en
 | **Agent layer** | **MCP** orchestrator → specialized sub-agents, each least-privilege | Tools/skills are governed and composable; blast radius is contained per agent |
 | **Gateway** | **Azure API Management** as the single model gateway | One choke point for authz, version-pinning, rate-limiting, prompt-injection defense, and audit |
 | **Guardrails** | I/O safety (e.g. **Llama Guard**) with a streaming-safety contract | Block unsafe input/output without breaking the streaming UX |
-| **Retrieval** | **RAG** over vector search | Ground answers in enterprise knowledge; cite sources |
+| **Retrieval** | **RAG** over vector search ([security-trimming lab](labs/rag-security-trimming/)) | Ground answers in enterprise knowledge; cite sources — retrieval trimmed by the caller's identity |
 | **Networking** | Hub-spoke VNets · Private Endpoints / Private DNS · **Azure Firewall Premium** | Zero-Trust; no public data-plane exposure |
 | **Identity** | **Entra ID** · Conditional Access · PIM · workload identity | Least-privilege, just-in-time access for humans *and* agents |
 | **Delivery** | **Terraform (AVM)** + **Azure Landing Zone Accelerator** via Azure DevOps | Governed, repeatable prod/dev/test; reviewable change |
@@ -39,6 +39,10 @@ The hard part of agentic AI in the enterprise isn't the model — it's **what an
 2. **Per-agent least privilege** — each sub-agent has its own identity, tools, and scoped permissions.
 3. **Confirmation + audit on writes** — agents that mutate systems require human-in-the-loop gates and leave an audit trail.
 4. **Input/output guardrails** — prompt-injection defense at the gateway, safety classification on I/O.
+
+## Labs — the patterns, proven hands-on
+
+- **[RAG security trimming](labs/rag-security-trimming/)** — retrieval under the user's Entra identity on Azure AI Search. Deploy → ingest → query → prove a restricted document is retrievable *only* by authorized users, deny-by-default. Includes the real failure modes (RBAC data-plane propagation, the global-access marker, missing group claims) that a happy-path demo hides.
 
 ## Everything as code
 
