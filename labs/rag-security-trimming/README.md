@@ -74,10 +74,6 @@ Every one of these cost time and is worth knowing before you hit it in productio
 8. **Retrieval relevance ≠ access control.** A document can be absent because it was out-ranked *or* because it was trimmed. To test access you must use a query where the doc *would* rank — otherwise you're proving nothing.
 9. **The ACL toggle is the clean proof.** Visibility flips on a single field, independent of the group-claim question. Toggling one ACL value (add/remove the group or the "all" marker) demonstrates trimming deterministically.
 
-## Talk track (the one-liner)
-
-> The dangerous part of enterprise RAG isn't the model, it's that the index will hand a document to whoever asks. So retrieval runs under the querying user's identity — documents carry ACLs, and the search is trimmed by the caller's group membership, deny-by-default. Same question, a user in the group gets the document, a user outside it doesn't, and the restricted chunk never enters the candidate set. Identity is enforced in the retrieval path, not asserted by the app.
-
 ## Where this sits in the reference architecture
 
 This lab is the **Retrieval** and **Identity** rows made concrete: RAG over vector search, under Entra identity, least-privilege, deny-by-default. The same principle — *enforce in the path, don't assert in the app* — is what the [agent ↔ LLM gateway](../../README.md#the-agent--llm-security-model) applies to tool calls and model access.
