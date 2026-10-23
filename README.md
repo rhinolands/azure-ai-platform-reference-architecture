@@ -49,6 +49,7 @@ The hard part of agentic AI in the enterprise isn't the model — it's **what an
 - Terraform via **Azure Verified Modules (AVM)** + the **ALZ Accelerator**.
 - Deployed through CI/CD (Azure DevOps); environments are identical and disposable.
 - Network core, gateway, AKS, and policy all version-controlled and peer-reviewed.
+- A small, tested Terraform baseline lives in [`terraform/`](terraform/). It creates a tagged resource group, a Log Analytics workspace and a budget alert. The rest of this architecture is not in that code yet.
 
 ---
 

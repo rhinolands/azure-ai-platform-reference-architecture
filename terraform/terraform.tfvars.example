@@ -1,0 +1,7 @@
+subscription_id       = "00000000-0000-0000-0000-000000000000"
+environment           = "dev"
+owner                 = "platform-team"
+cost_center           = "cc-0000"
+budget_amount         = 200
+budget_start_date     = "2026-11-01T00:00:00Z"
+budget_contact_emails = ["alerts@example.com"]
